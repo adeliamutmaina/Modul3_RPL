@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV 'C:\Users\THINKPAD T470\Documents\RPL\Modul 3\env'
+set -gx VIRTUAL_ENV 'C:\Users\THINKPAD T470\Documents\Prak RPL\Modul 3\env'
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/"Scripts $PATH

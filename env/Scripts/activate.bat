@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set "VIRTUAL_ENV=C:\Users\THINKPAD T470\Documents\RPL\Modul 3\env"
+set "VIRTUAL_ENV=C:\Users\THINKPAD T470\Documents\Prak RPL\Modul 3\env"
 
 if not defined PROMPT set PROMPT=$P$G
 
