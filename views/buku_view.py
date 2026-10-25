@@ -31,9 +31,15 @@ class BukuView(ctk.CTk):
         self.entry_tahun = ctk.CTkEntry(self.frame_kiri, placeholder_text="Tahun Terbit (Misal: 2024)")
         self.entry_tahun.pack(pady=10, padx=15, fill="x")
 
-        # Tombol Aksi
+        # Tombol Aksi (Simpan, Update, Delete)
         self.btn_simpan = ctk.CTkButton(self.frame_kiri, text="Simpan Data", fg_color="green")
-        self.btn_simpan.pack(pady=20, padx=15, fill="x")
+        self.btn_simpan.pack(pady=(15, 5), padx=15, fill="x")
+
+        self.btn_update = ctk.CTkButton(self.frame_kiri, text="Update", fg_color="blue")
+        self.btn_update.pack(pady=5, padx=15, fill="x")
+        
+        self.btn_delete = ctk.CTkButton(self.frame_kiri, text="Delete", fg_color="red")
+        self.btn_delete.pack(pady=5, padx=15, fill="x")
 
         # ============================================
         # FRAME KANAN: TABEL DAFTAR BUKU
@@ -51,7 +57,7 @@ class BukuView(ctk.CTk):
         self.tabel.heading("id", text="ID")
         self.tabel.heading("judul", text="Judul Buku")
         self.tabel.heading("penulis", text="Penulis")
-        self.tabel.heading("tahun", text="Tahun")
+        self.tabel.heading("tahun", text="Tahun")   
 
         # Konfigurasi Lebar Kolom
         self.tabel.column("id", width=40, anchor="center")
