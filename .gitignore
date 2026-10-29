@@ -1,5 +1,3 @@
-__pycache__/
-*.pyc
 # Python virtual environment
 env/
 venv/
@@ -7,3 +5,8 @@ venv/
 # Cache Python
 __pycache__/
 *.pyc
+
+# Hasil build PyInstaller
+build/
+dist/
+*.spec
