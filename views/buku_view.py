@@ -5,8 +5,9 @@ from tkinter import ttk
 class BukuView(ctk.CTk):
     def __init__(self):
         super().__init__()
+
         self.title("Sistem Manajemen Perpustakaan")
-        self.geometry("800x450")
+        self.geometry("800x500")
 
         # Konfigurasi grid utama
         self.grid_columnconfigure(0, weight=1)
@@ -17,15 +18,13 @@ class BukuView(ctk.CTk):
         # FRAME KIRI: FORMULIR INPUT BUKU
         # ============================================
         self.frame_kiri = ctk.CTkFrame(self)
-        self.frame_kiri.grid(row=0, column=0,padx=10, pady=10, sticky="nsew")
+        self.frame_kiri.grid(row=0, column=0,padx=10, pady=10,sticky="nsew")
 
-        ctk.CTkLabel(
-            self.frame_kiri,text="Form Data Buku",font=("Arial", 16, "bold")).pack(pady=15)
+        ctk.CTkLabel(self.frame_kiri, text="Form Data Buku", font=("Arial", 16, "bold")).pack(pady=15)
 
         # Input judul
         self.entry_judul = ctk.CTkEntry(self.frame_kiri,placeholder_text="Masukkan Judul Buku")
-        self.entry_judul.pack(
-            pady=10, padx=15, fill="x")
+        self.entry_judul.pack(pady=10, padx=15, fill="x")
 
         # Input penulis
         self.entry_penulis = ctk.CTkEntry(self.frame_kiri,placeholder_text="Masukkan Nama Penulis")
@@ -52,15 +51,21 @@ class BukuView(ctk.CTk):
         self.btn_hapus.pack(pady=5, padx=15, fill="x")
 
         # ============================================
+        # TOMBOL LOGOUT
+        # ============================================
+        self.btn_logout = ctk.CTkButton(self.frame_kiri,text="Logout",fg_color="gray",hover_color="darkgray")
+        self.btn_logout.pack(pady=(15, 10),padx=15,fill="x")
+
+        # ============================================
         # FRAME KANAN: TABEL DAFTAR BUKU
         # ============================================
         self.frame_kanan = ctk.CTkFrame(self)
-        self.frame_kanan.grid(row=0, column=1,padx=10, pady=10, sticky="nsew")
+        self.frame_kanan.grid(row=0, column=1,padx=10, pady=10,sticky="nsew")
 
         ctk.CTkLabel(self.frame_kanan,text="Daftar Koleksi Buku",font=("Arial", 16, "bold")).pack(pady=15)
 
         # Komponen tabel
-        kolom = ("id_buku","judul","penulis","tahun_terbit")
+        kolom = ("id_buku", "judul","penulis","tahun_terbit")
 
         self.tabel = ttk.Treeview(self.frame_kanan,columns=kolom,show="headings",height=15)
 

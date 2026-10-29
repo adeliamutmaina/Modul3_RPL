@@ -12,20 +12,61 @@ class UserModel:
     @staticmethod
     def hash_password(password):
         # Mengubah plain text menjadi hash SHA-256
-        return hashlib.sha256(password.encode('utf-8')).hexdigest()
+        return hashlib.sha256(password.encode("utf-8")).hexdigest()
 
     def autentikasi(self, username, password):
         if self.conn:
-            cursor = self.conn.cursor(dictionary=True)
-            password_hash = self.hash_password(password)
+            cursor = None
 
-            # Parameterized Query untuk mencegah SQL Injection
-            query = f"SELECT id_user, username, role FROM {self.table_name} WHERE username = %s AND password = %s"
+            try:
+                cursor = self.conn.cursor(dictionary=True)
+                password_hash = self.hash_password(password)
 
-            cursor.execute(query, (username, password_hash))
-            user = cursor.fetchone()
-            cursor.close()
+                # Parameterized Query untuk mencegah SQL Injection
+                query = (
+                    f"SELECT id_user, username, role "
+                    f"FROM {self.table_name} "
+                    "WHERE username = %s AND password = %s")
 
-            return user
-
+                cursor.execute(query, (username, password_hash))
+                user = cursor.fetchone()
+                return user
+            finally:
+                if cursor:cursor.close()
         return None
+
+    def register_user(self, username, password, role):
+        # Memeriksa koneksi database
+        if not self.conn:
+            return False
+
+        # Memeriksa role pengguna
+        if role not in ("admin", "anggota"):
+            return False
+
+        cursor = None
+
+        try:
+            # Mengubah password menjadi hash SHA-256
+            password_hash = self.hash_password(password)
+            cursor = self.conn.cursor()
+
+            # Menyimpan data pengguna ke tabel users
+            query = (
+                f"INSERT INTO {self.table_name} "
+                "(username, password, role) "
+                "VALUES (%s, %s, %s)")
+
+            cursor.execute(query, (username, password_hash, role))
+
+            self.conn.commit()
+            return True
+
+        except Exception as e:
+            self.conn.rollback()
+            print(f"Gagal mendaftarkan pengguna: {e}")
+            return False
+
+        finally:
+            if cursor:
+                cursor.close()

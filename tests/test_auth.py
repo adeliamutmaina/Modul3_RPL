@@ -1,0 +1,34 @@
+#Adelia_012
+from unittest.mock import MagicMock
+from models.user_model import UserModel
+
+def test_hash_password_konsisten():
+    password_asli = "admin123"
+
+    hash_1 = UserModel.hash_password(password_asli)
+    hash_2 = UserModel.hash_password(password_asli)
+
+    # Memastikan hasil hash dari input yang sama konsisten
+    assert hash_1 == hash_2
+    assert len(hash_1) == 64  # Panjang hash SHA-256
+
+
+def test_autentikasi_pengguna_berhasil():
+    model = UserModel()
+    model.conn = MagicMock()
+    mock_cursor = MagicMock()
+
+    model.conn.cursor.return_value = mock_cursor
+
+    # Simulasikan database mengembalikan akun admin
+    mock_cursor.fetchone.return_value = {
+        "id_user": 1,
+        "username": "petugas",
+        "role": "admin"
+    }
+
+    hasil = model.autentikasi("petugas", "admin123")
+
+    assert hasil is not None
+    assert hasil["username"] == "petugas"
+    assert hasil["role"] == "admin"

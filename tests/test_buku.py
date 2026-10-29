@@ -14,9 +14,7 @@ def test_create_buku_berhasil():
     model.conn.cursor.return_value = mock_cursor
 
     # Melakukan eksekusi fungsi
-    hasil = model.create_buku(
-        "Buku Testing", "Penulis QA", 2026
-    )
+    hasil = model.create_buku("Buku Testing", "Penulis QA", 2026)
 
     # Memverifikasi hasil
     assert hasil is True
@@ -63,10 +61,6 @@ def test_get_all_buku():
     assert len(hasil) == 2
 
     # Memastikan query dijalankan dengan benar
-    model.conn.cursor.assert_called_once_with(
-        dictionary=True
-    )
-    mock_cursor.execute.assert_called_once_with(
-        "SELECT * FROM buku"
-    )
+    model.conn.cursor.assert_called_once_with(dictionary=True)
+    mock_cursor.execute.assert_called_once_with("SELECT * FROM buku")
     mock_cursor.close.assert_called_once()
